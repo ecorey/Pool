@@ -60,7 +60,7 @@ const decodeTransaction = (txInput, txIdx, isMulticall = false) => {
 
     if (functionName === 'refundETH') { return logRefundETH(args) }
 
-    if (functionName === 'unwrapWETH9') { return logunwrapWETH9(args) }
+    if (functionName === 'unwrapWETH9') { return logUnwrapWETH9(args) }
 
     if (functionName === 'multicall') { return parseMulticall(data, txIdx) }
 
@@ -86,34 +86,67 @@ const logFunctionName = (functionName, txIdx, isMulticall) => {
 }
 
 
-const parseMulticall = () => {
-
+const parseMulticall = (data, txIdx) => {
+    data.foreach((tx, fnIdx) => {
+        decodeTransaction(tx, fnIdx, true)
+    })
 }
 
-const logunwrapWETH9 = () => {
-    
+const logUnwrapWETH9 = (args) => {
+    console.log('amountMinimum:          ', args.amountMinimum)
+    console.log('recipient:          ', args.recipient)
 }
 
-const logRefundETH = () => {
-    
+const logRefundETH = (parms) => {
+    console.log('Nothing to log')
 }
 
-const logSelfPermit = () => {
-    
+const logSelfPermit = (params) => {
+    console.log('token:          ', params.token)
+    console.log('value:          ', params.value)
+    console.log('deadline:          ', params.deadline)
 }
 
-const logExactOutput = () => {
-    
+const logExactOutput = (params) => {
+    console.log('path:          ', params.path)
+    console.log('recipient:          ', params.recipient)
+    console.log('deadline:          ', params.deadline)
+    console.log('amountOut:          ', params.amountOut)
+    console.log('amountInMaximum:          ', params.amountInMaximum)
 }
 
-const logExactInput = () => {
-    
+const logExactInput = (params) => {
+    console.log('path:          ', params.path)
+    console.log('recipient:          ', params.recipient)
+    console.log('deadline:          ', params.deadline)
+    console.log('amountIn:          ', params.amountIn)
+    console.log('amountOutMaximum:          ', params.amountOutMaximum)
 }
 
-const logExactOutputSingle = () => {
-    
+const logExactOutputSingle = (params) => {
+    console.log('tokenIn:          ', params.tokenIn)
+    console.log('tokenOut:          ', params.tokenOut)
+    console.log('fee:          ', params.fee)
+    console.log('recipient:          ', params.recipient)
+    console.log('deadline:          ', params.deadline)
+    console.log('amountOut:          ', params.amountOut)
+    console.log('amountInMaximum:          ', params.amountInMaximum)
+    console.log('sqrtPriceLimitX96:          ', params.sqrtPriceLimitX96)
 }
 
-const logExactInputSingle = () => {
-    
+const logExactInputSingle = (params) => {
+    console.log('tokenIn:          ', params.tokenIn)
+    console.log('tokenOut:          ', params.tokenOut)
+    console.log('fee:          ', params.fee)
+    console.log('recipient:          ', params.recipient)
+    console.log('deadline:          ', params.deadline)
+    console.log('amountIn:          ', params.amountIn)
+    console.log('amountOutMinimum:          ', params.amountOutMinimum)
+    console.log('sqrtPriceLimitX96:          ', params.sqrtPriceLimitX96)
 }
+
+
+main()
+/*
+    node scripts/03_listenMempool.js
+*/

@@ -36,7 +36,84 @@ const getTransaction = async (transactionHash) => {
 }
 
 const decodeTransaction = (txInput, txIdx, isMulticall = false) => {
-    const decodedData  = 
+    const decodedData  = contractInterface.parseTransaction({ data: txInput })
+
+    const functionName = decodedData.functionName
+    
+    const args = decodedData.args
+    const params = args.params
+
+    const data = args.data
+    
+    logFunctionName(functionName, txIdx, isMulticall)
+
+
+    if (functionName === 'exactInputSingle') { return logExactInputSingle(params) }
+
+    if (functionName === 'exactOutputSingle') { return logExactOutputSingle(params) }
+    
+    if (functionName === 'exactInput') { return logExactInput(params) }
+
+    if (functionName === 'exactOutput') { return logExactOutput(params) }
+
+    if (functionName === 'selfPermit') { return logSelfPermit(args) }
+
+    if (functionName === 'refundETH') { return logRefundETH(args) }
+
+    if (functionName === 'unwrapWETH9') { return logunwrapWETH9(args) }
+
+    if (functionName === 'multicall') { return parseMulticall(data, txIdx) }
+
+
+    console.log('ADD THIS FUNCTION:', functionName)
+    console.log('decodedData', decodedData)
+    
+
+}
+
+const logFunctionName = (functionName, txIdx, isMulticall) => {
+    if(isMulticall) {
+        console.log()
+        console.log('---------', 'Fn: ${txIdx}', functionName);
+        return
+    }
+
+    console.log()
+    console.log('====================================================')
+    console.log('=================', 'Tx: ${txIdx} - ${functionName}', '============' )
+    console.log('=====================================================')
+    
 }
 
 
+const parseMulticall = () => {
+
+}
+
+const logunwrapWETH9 = () => {
+    
+}
+
+const logRefundETH = () => {
+    
+}
+
+const logSelfPermit = () => {
+    
+}
+
+const logExactOutput = () => {
+    
+}
+
+const logExactInput = () => {
+    
+}
+
+const logExactOutputSingle = () => {
+    
+}
+
+const logExactInputSingle = () => {
+    
+}
